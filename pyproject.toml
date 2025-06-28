@@ -1,0 +1,72 @@
+[project]
+name = "workalove-challenge"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "vitorroxo",email = "vitorroxo.dev@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13,<4.0"
+dependencies = [
+    "django (>=5.2.3,<6.0.0)",
+    "djangorestframework (>=3.16.0,<4.0.0)",
+    "pydantic (>=2.11.7,<3.0.0)",
+    "dj-database-url (>=3.0.0,<4.0.0)",
+    "pydantic-settings (>=2.10.1,<3.0.0)",
+    "psycopg2-binary (>=2.9.10,<3.0.0)",
+    "drf-spectacular (>=0.28.0,<0.29.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.1"
+pytest-cov = "^6.2.1"
+taskipy = "^1.14.1"
+ruff = "^0.12.0"
+pytest-django = "^4.11.1"
+
+[tool.ruff]
+line-length = 100
+extend-exclude = [
+  'migrations',
+  'manage.py',
+  'asgi.py',
+  'settings.py',
+  'wsgi.py'
+]
+
+[tool.ruff.lint]
+ignore = ["PLR6301", "PLR2004"]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+
+[tool.pytest.ini_options]
+pythonpath = 'src'
+addopts = ' -p no:warnings'
+DJANGO_SETTINGS_MODULE = 'src.api.settings'
+python_files = 'tests.py test_*.py *_tests.py *_test.py'
+
+
+[tool.taskipy.tasks]
+lint = 'ruff check'
+pre_format = 'ruff check --fix'
+format = 'ruff format'
+run = 'python manage.py runserver'
+pre_test = 'task lint'
+test = 'pytest -s -x -vv --cov=src'
+post_test = 'coverage html'
+migrate = 'python manage.py migrate'
+makemigrations = 'python manage.py makemigrations'
