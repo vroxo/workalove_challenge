@@ -80,5 +80,5 @@ docker run tests
 ```
 
 ## 📚 Documentação da API:
-- Swagger UI: [http://localhost:8000/docs/](http://localhost:8000)
+- Swagger UI: [http://localhost:8000/api/docs/](http://localhost:8000/api/docs/)
 - Arquivo OpenAPI: [http://localhost:8000/api/schema/](http://localhost:8000/api/schema/)
